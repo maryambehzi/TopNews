@@ -1,4 +1,4 @@
-package com.maryambehzi.topnews;
+package com.maryambehzi.topnews.adapter;
 
 import android.view.View;
 

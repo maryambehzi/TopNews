@@ -19,5 +19,6 @@
     <string name="Science">Science</string>
     <string name="sports">Sports</string>
     <string name="technology">Technology</string>
+    <string name="choose_a_filter">Please choose a category</string>
 
 </resources>

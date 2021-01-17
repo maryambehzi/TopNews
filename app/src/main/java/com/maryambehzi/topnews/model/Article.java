@@ -3,6 +3,10 @@ package com.maryambehzi.topnews.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Article {
     @SerializedName("source")
     @Expose
@@ -78,7 +82,16 @@ public class Article {
     }
 
     public String getPublishedAt() {
-        return publishedAt.substring(0,9);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date date = null;
+        try {
+            date = dateFormat.parse(publishedAt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        return publishedAt.substring(0,9);
+        return date.toString().substring(0,11)+date.toString().substring(29,34);
     }
 
     public void setPublishedAt(String publishedAt) {

@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-
 public class MainActivity extends AppCompatActivity {
 
     Button All, Business, Entertainment, General, Health, Science, Sport, Technology;
@@ -62,48 +61,56 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         filterType = "all";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 Business.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "business";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 Entertainment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "entertainment";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 General.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "general";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 Health.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "health";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 Science.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "science";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 Sport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "sport";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
                 Technology.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         filterType = "technology";
+                        Toast.makeText(MainActivity.this,filterType,Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -115,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         .setNegativeText("Cancel") // set negative text
                         .setPositiveButtonBackground(getResources().getColor(R.color.falert_green)) // button (positive) background color
                         .setNegativeButtonBackground(getResources().getColor(R.color.falert_red)) // button (negative) background color
-                        .setHeaderIcon(getResources().getDrawable(R.drawable.luncher)) // header icon drawable
+                        .setHeaderIcon(getResources().getDrawable(R.drawable.ic_filterlist)) // header icon drawable
                         .setAlertRadius(40) // set radius for alert view
                         .setButtonRadius(80) // set radius for button
                         .setButtonTextSize(13) // button (all) text size

@@ -7,9 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Url;
 
 public interface IDrinkShopAPI {
-
     @GET
     Call<News> getNews(@Url String urlString);
-
-
 }

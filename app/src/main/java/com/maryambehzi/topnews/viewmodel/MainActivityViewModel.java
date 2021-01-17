@@ -11,7 +11,6 @@ import com.maryambehzi.topnews.repository.NewsRepository;
 
 import java.util.List;
 
-
 public class MainActivityViewModel extends AndroidViewModel {
 
     NewsRepository newsRepository;
