@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TopNews</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="api_key">f62d0ae5fda3402282ec47be382fb2cb</string>
+    <string name="All">All</string>
+    <string name="Business">Business</string>
+    <string name="Entertainment">Entertainment</string>
+    <string name="general">General</string>
+    <string name="health">Health</string>
+    <string name="Science">Science</string>
+    <string name="sports">Sports</string>
+    <string name="technology">Technology</string>
+
+</resources>
