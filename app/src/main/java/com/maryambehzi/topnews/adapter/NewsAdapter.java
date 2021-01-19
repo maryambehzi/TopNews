@@ -44,7 +44,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.date.setText(articles.get(position).getPublishedAt());
         holder.source.setText(articles.get(position).getSource().getName());
         String photoUrl = articles.get(position).getUrlToImage();
-        Picasso.get().load(photoUrl).into(holder.imageView);
+        try {
+            Picasso.get().load(photoUrl).into(holder.imageView);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         holder.setItemClickListener(new IItemClickListener() {
             @Override
             public void onClick(View v) {

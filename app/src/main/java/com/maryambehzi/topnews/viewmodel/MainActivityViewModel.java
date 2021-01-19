@@ -20,29 +20,30 @@ public class MainActivityViewModel extends AndroidViewModel {
         newsRepository = new NewsRepository(application);
     }
 
-    public LiveData<List<Article>> getAllArticle(){
-        return newsRepository.getMutableLiveData();
+    public LiveData<List<Article>> getAllArticle(int page){
+        return newsRepository.getMutableLiveData(page);
     }
-    public LiveData<List<Article>> getBusinessArticle(){
-        return newsRepository.getMutableLiveDataBusiness();
+    public LiveData<List<Article>> getBusinessArticle(int page){
+        return newsRepository.getMutableLiveDataBusiness(page);
     }
-    public LiveData<List<Article>> getEntertainmentArticle(){
-        return newsRepository.getMutableLiveDataEntertainment();
+    public LiveData<List<Article>> getEntertainmentArticle(int page){
+        return newsRepository.getMutableLiveDataEntertainment(page);
     }
-    public LiveData<List<Article>> getGeneralArticle(){
-        return newsRepository.getMutableLiveDataGeneral();
+    public LiveData<List<Article>> getGeneralArticle(int page){
+        return newsRepository.getMutableLiveDataGeneral(page);
     }
-    public LiveData<List<Article>> getHealthArticle(){
-        return newsRepository.getMutableLiveDataHealth();
+    public LiveData<List<Article>> getHealthArticle(int page){
+        return newsRepository.getMutableLiveDataHealth(page);
     }
-    public LiveData<List<Article>> getScienceArticle(){
-        return newsRepository.getMutableLiveDataScience();
+    public LiveData<List<Article>> getScienceArticle(int page){
+        return newsRepository.getMutableLiveDataScience(page);
     }
-    public LiveData<List<Article>> getSportsArticle(){
-        return newsRepository.getMutableLiveDataSports();
+    public LiveData<List<Article>> getSportsArticle(int page){
+        return newsRepository.getMutableLiveDataSports(page);
     }
-    public LiveData<List<Article>> getTechnologyArticle(){
-        return newsRepository.getMutableLiveDataTechnology();
+    public LiveData<List<Article>> getTechnologyArticle(int page){
+        return newsRepository.getMutableLiveDataTechnology(page);
     }
+
 
 }

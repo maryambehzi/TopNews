@@ -20,5 +20,6 @@
     <string name="sports">Sports</string>
     <string name="technology">Technology</string>
     <string name="choose_a_filter">Please choose a category</string>
+    <string name="next_page">Next Page</string>
 
 </resources>

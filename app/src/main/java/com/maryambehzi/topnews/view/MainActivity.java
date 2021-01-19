@@ -1,13 +1,16 @@
 package com.maryambehzi.topnews.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.maryambehzi.topnews.utils.Common;
 import com.maryambehzi.topnews.viewmodel.MainActivityViewModel;
 import com.maryambehzi.topnews.adapter.NewsAdapter;
 import com.maryambehzi.topnews.R;
@@ -16,6 +19,7 @@ import com.waspar.falert.DoubleButtonListener;
 import com.waspar.falert.Falert;
 import com.waspar.falert.FalertButtonType;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -27,16 +31,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button All, Business, Entertainment, General, Health, Science, Sport, Technology;
+    Button All, Business, Entertainment, General, Health, Science, Sport, Technology, nextPage;
     RecyclerView recyclerView;
     FloatingActionButton fab;
     String filterType = "all";
+    SharedPreferences sharedPreferences ;
+    SharedPreferences.Editor editor;
+    int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPreferences = getSharedPreferences("TopNews", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         fab = findViewById(R.id.fab);
+        nextPage = findViewById(R.id.btn_next_page);
         recyclerView = findViewById(R.id.recycler);
 
         MainActivityViewModel activityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
@@ -131,81 +143,8 @@ public class MainActivity extends AppCompatActivity {
                         .setDoubleButtonListener(new DoubleButtonListener() {
                             @Override
                             public void onClickPositive() {
-                                switch (filterType){
-                                    case "all":
-                                        activityViewModel.getAllArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-
-                                    case "business":
-                                        activityViewModel.getBusinessArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                    case "entertainment":
-                                        activityViewModel.getEntertainmentArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                    case "general":
-                                        activityViewModel.getGeneralArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                    case "health":
-                                        activityViewModel.getHealthArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                    case "science":
-                                        activityViewModel.getScienceArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                    case "sport":
-                                        activityViewModel.getSportsArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                    case "technology":
-                                        activityViewModel.getTechnologyArticle().observe(MainActivity.this, new Observer<List<Article>>() {
-                                            @Override
-                                            public void onChanged(@Nullable List<Article> articles) {
-                                                recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                                                recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
-                                            }
-                                        });
-                                        break;
-                                }
+                                SwitchFilterRV(1);
+                                page = 1;
                             }
 
                             @Override
@@ -217,15 +156,140 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        activityViewModel.getAllArticle().observe(this, new Observer<List<Article>>() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1)) {
+                    //TODO next page
+                    Log.e("ERROR_NEXTPAGE", String.valueOf(sharedPreferences.getInt("currentPage", 0)));
+                    if (Common.totalPage >= sharedPreferences.getInt("currentPage",0)*20)
+                        nextPage.setVisibility(View.VISIBLE);
+                    else {
+                        editor.putInt("currentPage",1);
+                        editor.commit();
+                    }
+                    nextPage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            page = sharedPreferences.getInt("currentPage", 0)+1;
+                            editor.putInt("currentPage", page);
+                            editor.commit();
+
+                            Log.e("Filter", filterType);
+
+                            SwitchFilterRV(page);
+                        }
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        activityViewModel.getAllArticle(1).observe(this, new Observer<List<Article>>() {
             @Override
             public void onChanged(@Nullable List<Article> articles) {
                 recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                 recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                editor.putInt("currentPage",page);
+                editor.commit();
             }
         });
-
-
     }
 
+    private void SwitchFilterRV(int page){
+
+        MainActivityViewModel activityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
+
+        switch (filterType){
+            case "all":
+                activityViewModel.getAllArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+
+            case "business":
+                activityViewModel.getBusinessArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+            case "entertainment":
+                activityViewModel.getEntertainmentArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+            case "general":
+                activityViewModel.getGeneralArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+            case "health":
+                activityViewModel.getHealthArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+            case "science":
+                activityViewModel.getScienceArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+            case "sport":
+                activityViewModel.getSportsArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+            case "technology":
+                activityViewModel.getTechnologyArticle(page).observe(MainActivity.this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Article> articles) {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                        recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                        nextPage.setVisibility(View.GONE);
+                    }
+                });
+                break;
+        }
+    }
 }
