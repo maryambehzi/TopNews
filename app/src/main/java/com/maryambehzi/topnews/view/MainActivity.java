@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     String filterType = "all";
     SharedPreferences sharedPreferences ;
     SharedPreferences.Editor editor;
+    ProgressBar progressBar;
     int page = 1;
 
     @Override
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         nextPage = findViewById(R.id.btn_next_page);
         recyclerView = findViewById(R.id.recycler);
+        progressBar = findViewById(R.id.progressBar);
 
         MainActivityViewModel activityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -197,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Article> articles) {
                 recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                 recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
+                progressBar.setVisibility(View.GONE);
                 editor.putInt("currentPage",page);
                 editor.commit();
             }
@@ -216,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -227,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -237,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -247,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -257,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -267,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -277,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
@@ -287,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
                 break;
