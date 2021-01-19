@@ -10,7 +10,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-    <string name="api_key">f62d0ae5fda3402282ec47be382fb2cb</string>
+    <string name="api_key">c70447b7749e48bb8fff4fad6242ec67</string>
     <string name="All">All</string>
     <string name="Business">Business</string>
     <string name="Entertainment">Entertainment</string>
@@ -21,5 +21,6 @@
     <string name="technology">Technology</string>
     <string name="choose_a_filter">Please choose a category</string>
     <string name="next_page">Next Page</string>
+    <string name="previous_page">Previous Page</string>
 
 </resources>

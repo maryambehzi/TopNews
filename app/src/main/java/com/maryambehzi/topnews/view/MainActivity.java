@@ -32,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button All, Business, Entertainment, General, Health, Science, Sport, Technology, nextPage;
+    Button All, Business, Entertainment, General, Health, Science, Sport, Technology, nextPage, previousPage;
     RecyclerView recyclerView;
     FloatingActionButton fab;
     String filterType = "all";
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab);
         nextPage = findViewById(R.id.btn_next_page);
+        previousPage = findViewById(R.id.btn_previous_page);
         recyclerView = findViewById(R.id.recycler);
         progressBar = findViewById(R.id.progressBar);
 
@@ -164,14 +165,16 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1)) {
-                    //TODO next page
                     Log.e("ERROR_NEXTPAGE", String.valueOf(sharedPreferences.getInt("currentPage", 0)));
                     if (Common.totalPage >= sharedPreferences.getInt("currentPage",0)*20)
                         nextPage.setVisibility(View.VISIBLE);
                     else {
-                        editor.putInt("currentPage",1);
-                        editor.commit();
+                        previousPage.setVisibility(View.VISIBLE);
                     }
+                    if (sharedPreferences.getInt("currentPage", 0) != 1)
+                        previousPage.setVisibility(View.VISIBLE);
+                    else
+                        previousPage.setVisibility(View.GONE);
                     nextPage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -180,6 +183,17 @@ public class MainActivity extends AppCompatActivity {
                             editor.commit();
 
                             Log.e("Filter", filterType);
+
+                            SwitchFilterRV(page);
+                        }
+                    });
+
+                    previousPage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            page = sharedPreferences.getInt("currentPage", 0)-1;
+                            editor.putInt("currentPage", page);
+                            editor.commit();
 
                             SwitchFilterRV(page);
                         }
@@ -220,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -232,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -254,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -265,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -276,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -287,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -298,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
                         recyclerView.setAdapter(new NewsAdapter( articles, MainActivity.this));
                         nextPage.setVisibility(View.GONE);
+                        previousPage.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                     }
                 });
